@@ -1,0 +1,551 @@
+-- phpMyAdmin SQL Dump
+-- version 5.0.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jun 16, 2021 at 11:51 AM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 7.4.8
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `hrms1`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_detail`
+--
+
+CREATE TABLE `account_detail` (
+  `id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `bank_name` varchar(200) NOT NULL,
+  `bank_account` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `apply_leave`
+--
+
+CREATE TABLE `apply_leave` (
+  `id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `type_id` int(11) NOT NULL,
+  `from_date` date NOT NULL,
+  `to_date` date NOT NULL,
+  `description` varchar(200) NOT NULL,
+  `apply_leave_days` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendance`
+--
+
+CREATE TABLE `attendance` (
+  `id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `check_in` time NOT NULL,
+  `check_out` time NOT NULL,
+  `attribute_status` set('absent','present','late','half day') NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `education`
+--
+
+CREATE TABLE `education` (
+  `id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `level` varchar(200) NOT NULL,
+  `year` varchar(200) NOT NULL,
+  `gpa` varchar(200) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_category`
+--
+
+CREATE TABLE `employee_category` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `employee_category`
+--
+
+INSERT INTO `employee_category` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Probation', '2021-05-17 09:00:54', '2021-05-17 09:00:54'),
+(2, 'Confirmation', '2021-05-17 09:00:54', '2021-05-17 09:00:54');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `leave_details`
+--
+
+CREATE TABLE `leave_details` (
+  `id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `type_id` int(11) NOT NULL,
+  `entitled` int(11) NOT NULL,
+  `avail` int(11) NOT NULL,
+  `remaining` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `leave_type`
+--
+
+CREATE TABLE `leave_type` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `leave_type`
+--
+
+INSERT INTO `leave_type` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Casual', '2021-05-17 08:56:04', '2021-05-17 08:56:04'),
+(2, 'Sick', '2021-05-17 08:56:04', '2021-05-17 08:56:04'),
+(3, 'Annual', '2021-05-17 08:56:04', '2021-05-17 08:56:04'),
+(4, 'Leave Without Pay', '2021-05-17 08:56:04', '2021-05-17 08:56:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `leave_type_category`
+--
+
+CREATE TABLE `leave_type_category` (
+  `id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `type_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `requisition`
+--
+
+CREATE TABLE `requisition` (
+  `id` int(11) NOT NULL,
+  `workflow_id` int(11) NOT NULL,
+  `item` varchar(200) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `remarks` varchar(255) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `status` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role`
+--
+
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL,
+  `name` varchar(150) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', '2021-05-17 09:24:10', '2021-05-17 09:24:10'),
+(2, 'HR', '2021-05-17 09:24:10', '2021-05-17 09:24:10'),
+(3, 'Line Manager', '2021-05-17 09:24:10', '2021-05-17 09:24:10'),
+(4, 'Employee', '2021-05-17 09:28:43', '2021-05-17 09:28:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `separation`
+--
+
+CREATE TABLE `separation` (
+  `id` int(11) NOT NULL,
+  `workflow_id` int(11) NOT NULL,
+  `last_working_day` varchar(50) NOT NULL,
+  `reason` varchar(200) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `status`
+--
+
+CREATE TABLE `status` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `time_adjustment`
+--
+
+CREATE TABLE `time_adjustment` (
+  `id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `check_in_time` time NOT NULL,
+  `requested_time` time NOT NULL,
+  `reason` varchar(255) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `password` varchar(250) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workflow`
+--
+
+CREATE TABLE `workflow` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `work_experience`
+--
+
+CREATE TABLE `work_experience` (
+  `id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `company` varchar(200) NOT NULL,
+  `job_title` varchar(200) NOT NULL,
+  `from_date` date NOT NULL,
+  `to_date` date NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `account_detail`
+--
+ALTER TABLE `account_detail`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `emp_id` (`emp_id`);
+
+--
+-- Indexes for table `apply_leave`
+--
+ALTER TABLE `apply_leave`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `emp_id` (`emp_id`),
+  ADD KEY `type_id` (`type_id`);
+
+--
+-- Indexes for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `emp_id` (`emp_id`);
+
+--
+-- Indexes for table `education`
+--
+ALTER TABLE `education`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `emp_id` (`emp_id`);
+
+--
+-- Indexes for table `employee_category`
+--
+ALTER TABLE `employee_category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `leave_details`
+--
+ALTER TABLE `leave_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `emp_id` (`emp_id`),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `type_id` (`type_id`);
+
+--
+-- Indexes for table `leave_type`
+--
+ALTER TABLE `leave_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `leave_type_category`
+--
+ALTER TABLE `leave_type_category`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `type_id` (`type_id`);
+
+--
+-- Indexes for table `requisition`
+--
+ALTER TABLE `requisition`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `workflow_id` (`workflow_id`),
+  ADD KEY `emp_id` (`emp_id`),
+  ADD KEY `role_id` (`role_id`);
+
+--
+-- Indexes for table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `separation`
+--
+ALTER TABLE `separation`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `workflow_id` (`workflow_id`),
+  ADD KEY `emp_id` (`emp_id`),
+  ADD KEY `role_id` (`role_id`);
+
+--
+-- Indexes for table `status`
+--
+ALTER TABLE `status`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `time_adjustment`
+--
+ALTER TABLE `time_adjustment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `emp_id` (`emp_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `workflow`
+--
+ALTER TABLE `workflow`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `work_experience`
+--
+ALTER TABLE `work_experience`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `emp_id` (`emp_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `account_detail`
+--
+ALTER TABLE `account_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `apply_leave`
+--
+ALTER TABLE `apply_leave`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `attendance`
+--
+ALTER TABLE `attendance`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `education`
+--
+ALTER TABLE `education`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `employee_category`
+--
+ALTER TABLE `employee_category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `leave_details`
+--
+ALTER TABLE `leave_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `leave_type`
+--
+ALTER TABLE `leave_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `leave_type_category`
+--
+ALTER TABLE `leave_type_category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `requisition`
+--
+ALTER TABLE `requisition`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `role`
+--
+ALTER TABLE `role`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `separation`
+--
+ALTER TABLE `separation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `status`
+--
+ALTER TABLE `status`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `time_adjustment`
+--
+ALTER TABLE `time_adjustment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `workflow`
+--
+ALTER TABLE `workflow`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `work_experience`
+--
+ALTER TABLE `work_experience`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `account_detail`
+--
+ALTER TABLE `account_detail`
+  ADD CONSTRAINT `account_detail_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `staffshaw_hrms`.`employee` (`id`);
+
+--
+-- Constraints for table `apply_leave`
+--
+ALTER TABLE `apply_leave`
+  ADD CONSTRAINT `apply_leave_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `staffshaw_hrms`.`employee` (`id`);
+
+--
+-- Constraints for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `staffshaw_hrms`.`employee` (`id`);
+
+--
+-- Constraints for table `education`
+--
+ALTER TABLE `education`
+  ADD CONSTRAINT `education_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `staffshaw_hrms`.`employee` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

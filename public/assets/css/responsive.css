@@ -1,0 +1,133 @@
+@media (max-width: 1160px) {
+}
+@media (max-width: 1024px) {
+    .btn-top {
+        margin-top: -107px;
+        font-size: 15px;
+        width: 15%;
+        margin-right: 60px !important;
+    }
+    .heropart1 h1 {
+        font-size: 45px;
+    }
+    .dog-random {
+        left: 403px;
+    }
+    .dog-random img {
+        width: 120%;
+    }
+}
+@media (max-width: 768px) {
+    .btn-top {
+        margin-top: -107px;
+        font-size: 15px;
+        width: 15%;
+        margin-right: 60px !important;
+    }
+    .heropart1 h1 {
+        font-size: 40px;
+    }
+    .heropart2 h3 {
+        font-size: 20px;
+    }
+    .dog-random img {
+        width: 112%;
+    }
+    .dog-random {
+        position: absolute;
+        display: grid;
+        top: 221px;
+        left: 270px;
+    }
+    .social-icons {
+        padding-top: 10px;
+    }
+    .heropart2 img {
+        display: flex;
+        width: 45%;
+        padding-bottom: 17px;
+    }
+    .heropart2 button {
+        margin-top: 10px;
+        font-size: 16px;
+    }
+    .footmenu ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        color: #fff;
+        padding-top: 20px;
+        gap: 6px;
+    }
+    .footer-content p {
+        width: 76%;
+    }
+}
+@media (max-width: 1440px) {
+    .btn-top {
+        margin-right: 35px;
+    }
+}
+@media only screen and (max-width: 991px) {
+    /*RESPONSIVE NAVIGATION*/
+    .mobile-menu {
+        display: block;
+    }
+    /*RESPONSIVE NAVIGATION*/
+}
+@media (max-width: 425px) {
+    .btn-top {
+        margin-top: -107px;
+        font-size: 15px;
+        width: 25%;
+        margin-right: 90px !important;
+    }
+    .dog-random {
+        padding-top: 50px;
+        position: relative;
+        top: 0px;
+        left: 0px;
+    }
+    .dog-random img {
+        width: 70%;
+    }
+    .heropart2 {
+        padding-top: 50px;
+        display: grid;
+        justify-items: center;
+        gap: 10px;
+    }
+    .heropart2 img {
+        width: 35%;
+    }
+    .heropart2 p {
+        width: 90%;
+        text-align: center;
+    }
+    .footmenu ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        color: #fff;
+        padding-top: 20px;
+        gap: 8px;
+    }
+    .footer-content p {
+        width: 85%;
+    }
+}
+@media (max-width: 576px) {
+    .heropart1 h1 {
+        font-size: 34px;
+    }
+    .heropart2 h3 {
+        font-weight: 600;
+        font-size: 22px;
+        letter-spacing: 0.4px;
+    }
+}
+@media (max-width: 320px) {
+    .hero {
+        background-position: left;
+    }
+}
