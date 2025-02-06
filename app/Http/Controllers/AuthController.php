@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewUserWelcomeEmail;
 use App\Models\User;
 use App\Models\UserPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+
 
 class AuthController extends Controller
 {
@@ -56,10 +60,12 @@ class AuthController extends Controller
             'name_on_card' => 'required|string',
             'credit_card_number' => 'required|string|size:16',
             'cvv' => 'required|integer|min:100|max:999',
-            'expiration_date' => 'required|date',
+            'amount' => 'required|integer|min:5',
+            'expiration_date' => 'required|date|after:today',
         ]);
 
         $newUser = new User();
+        $newUser->role_id = 2;
         $newUser->full_name = $request->full_name;
         $newUser->email = $request->email;
         $newUser->phone = $request->phone;
@@ -69,12 +75,31 @@ class AuthController extends Controller
 
             $addPayment = new UserPayment();
             $addPayment->user_id = $newUser->id;
+            // add stripe payment transaction id here
+            $addPayment->transaction_id = Str::random(12);
+            $addPayment->amount = $request->amount?? 5;
             $addPayment->name_on_card = $request->name_on_card;
             $addPayment->credit_card_number = $request->credit_card_number;
             $addPayment->cvv = $request->cvv;
             $addPayment->expiration_date = $request->expiration_date;
             $addPayment->is_active = 1;
             $addPayment->save();
+
+            // send Mail to user
+            $user = [
+                'full_name' => $newUser->full_name,
+                'email' => $newUser->email,
+                'password' => $request->password
+            ];
+            $payment = [
+                'transaction_id' => $addPayment->transaction_id,
+                'name_on_card' => $request->name_on_card,
+                'amount' => $addPayment->amount,
+                'payment_date' => $addPayment->created_at
+            ];
+
+            Mail::to('assadullah.shaffshaw@gmail.com')->send(new NewUserWelcomeEmail($user, $payment));
+
 
             return redirect()->route('login')->with('success', 'User Registed and Payment paid successfully');
         }

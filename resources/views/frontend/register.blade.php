@@ -107,6 +107,14 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="col-md-6 p-2">
+                            <div class="field input-field">
+                                <input type="text" name="amount" placeholder="Amount" class="input">
+                                @error('amount')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 p-2">
