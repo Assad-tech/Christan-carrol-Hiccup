@@ -54,6 +54,12 @@ Route::get('/', function () {
         if (auth()->user()->role_id == 1) {
             return redirect()->route('admin.dashboard');
         }
+
+        $user = auth()->user();
+        $paymentStatus = $user->payments()->exists(); // Check if the user has any payments
+        // dd($paymentStatus);
+        return view('frontend.index', ['payment_status' => $paymentStatus]);
     }
-    return view('frontend.index');
+
+    return view('frontend.index', ['payment_status' => false]);
 })->name('frontend.homepage');

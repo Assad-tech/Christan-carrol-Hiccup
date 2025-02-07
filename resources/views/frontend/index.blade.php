@@ -63,7 +63,7 @@
 
     <section class="hero">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row align-items-center mb-4">
                 @if (Auth::user())
                     <div class="col-auto">
                         <img class="profileImage rounded-circle"
@@ -101,16 +101,20 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-2 col-sm-12">
                     <!-- <div class="dog-random">
-                <img src="assets/images/dogrgb.png" alt="">
-            </div> -->
+                        <img src="assets/images/dogrgb.png" alt="">
+                    </div> -->
                     <div class="dog-random image-container" data-aos="fade-up" data-aos-easing="linear"
                         data-aos-duration="1500">
-                        <img id="{{ Auth::check() ? 'balloonDog' : '' }}"
-                            src="{{ asset('public/assets/images/dogrgb.png') }}" alt="Balloon Dog">
+                        <img id="balloonDog" src="{{ asset('public/assets/images/dogrgb.png') }}" alt="Balloon Dog"
+                            {{-- data-clickable="{{ Auth::check() && $payment_status ? 'true' : 'false' }}"> --}}
+                            data-clickable="{{ Auth::check() ? ($payment_status ? 'true' : 'no_payment') : 'false' }}">
+
                     </div>
                 </div>
+
                 <div class="col-md-5 col-sm-12" data-aos="fade-right" data-aos-easing="linear"
                     data-aos-duration="1500">
                     <div class="heropart2">
@@ -192,7 +196,26 @@
         let index = 0; // Track current color index
         const img = document.getElementById("balloonDog");
 
+        // img.addEventListener("click", function() {
+        //     this.style.filter = filters[index]; // Apply next color
+        //     index = (index + 1) % filters.length; // Loop back to start
+        // });
         img.addEventListener("click", function() {
+            const isClickable = this.getAttribute("data-clickable");
+
+            // If the user is not logged in or not registered
+            if (isClickable === "false") {
+                alert("You need to log in and make a payment to unlock this feature!");
+                return;
+            }
+
+            // If the user is logged in but no payment record is found
+            if (isClickable === "no_payment") {
+                alert("Please make a payment to access this feature!");
+                return;
+            }
+
+            // Change dog color if all conditions are met
             this.style.filter = filters[index]; // Apply next color
             index = (index + 1) % filters.length; // Loop back to start
         });
